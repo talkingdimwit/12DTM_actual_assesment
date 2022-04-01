@@ -6,22 +6,29 @@ public class playerMovement : MonoBehaviour
 {
 
     public float speed = 20f;
-    Vector2 lastClickedPos;
+    public bool isOnground = true;
     bool moving;
-
+    Vector2 lastClickedPos;
+    
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        isOnground = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isOnground)
             {
                 lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 moving = true;
+                isOnground = false;
             }
 
         if (moving && (Vector2)transform.position != lastClickedPos)
