@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
-
     public float speed = 20f;
     public bool isOnground = true;
     bool moving;
@@ -13,7 +12,7 @@ public class playerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+     
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -28,13 +27,14 @@ public class playerMovement : MonoBehaviour
             {
                 lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 moving = true;
-                isOnground = false;
+                
             }
 
         if (moving && (Vector2)transform.position != lastClickedPos)
         {
             float step = speed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, lastClickedPos, step);
+            isOnground = false;
         }
         else
         {
