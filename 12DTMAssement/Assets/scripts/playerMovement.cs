@@ -6,7 +6,8 @@ public class playerMovement : MonoBehaviour
 {
     public float speed = 20f;
     public bool isOnground = true;
-    bool moving;
+    public Rigidbody2D rb;
+    private Vector2 initialVilocity;
     Vector2 lastClickedPos;
     
     // Start is called before the first frame update
@@ -15,9 +16,14 @@ public class playerMovement : MonoBehaviour
      
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         isOnground = true;
+    }
+
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        isOnground = false;
     }
 
     // Update is called once per frame
@@ -26,19 +32,8 @@ public class playerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && isOnground)
             {
                 lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                moving = true;
-                
+                initialVilocity = lastClickedPos - rb.position;
+                rb.AddForce(initialVilocity, ForceMode2D.Impulse);
             }
-
-        if (moving && (Vector2)transform.position != lastClickedPos)
-        {
-            float step = speed * Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, lastClickedPos, step);
-            isOnground = false;
-        }
-        else
-        {
-            moving = false;
-        }
     }
 }
