@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
+    // Varibles
     public float speed = 20f;
     public bool isOnground = true;
     public Rigidbody2D rb;
     public LineRenderer linerenderer;
     private Vector2 initialVilocity;
     private Vector2 mouseCorrection;
-    private const int lineScale = 10;
+    private int lineScale = 10;
     Vector2 lastClickedPos;
     
     // Start is called before the first frame update
@@ -20,12 +21,12 @@ public class playerMovement : MonoBehaviour
         mouseCorrection.y = 5;
     }
 
+    // Detects when the player leaves and touches the ground
     public void OnCollisionEnter2D(Collision2D collision)
     {
         isOnground = true;
-        linerenderer.enabled = true;
+        linerenderer.enabled = true; // This is showing and hideing the players trejectory
     }
-
     public void OnCollisionExit2D(Collision2D collision)
     {
         isOnground = false;
@@ -35,9 +36,8 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // Gets mouse position then makes the player be thrown towards it
         lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
         initialVilocity = (lastClickedPos + mouseCorrection) - rb.position;
         LineUpdate();
         if (Input.GetMouseButtonDown(0) && isOnground)
@@ -46,6 +46,7 @@ public class playerMovement : MonoBehaviour
             }
     }
 
+    // This is a big math equation that draws the trejectory of the player
     private void LineUpdate()
     {
         float g = Physics.gravity.magnitude;
