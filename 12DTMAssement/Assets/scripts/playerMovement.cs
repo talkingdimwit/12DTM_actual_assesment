@@ -12,6 +12,7 @@ public class playerMovement : MonoBehaviour
     private Vector2 initialVilocity;
     private Vector2 mouseCorrection;
     private int lineScale = 10;
+    private Vector2 endofline;
     Vector2 lastClickedPos;
     
     // Start is called before the first frame update
@@ -36,6 +37,8 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        endofline = linerenderer.GetPosition(lineScale - 1);
+        Debug.Log(endofline);
         // Gets mouse position then makes the player be thrown towards it
         lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         initialVilocity = (lastClickedPos + mouseCorrection) - rb.position;
