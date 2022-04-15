@@ -13,6 +13,7 @@ public class playerMovement : MonoBehaviour
     private Vector2 mouseCorrection;
     private int lineScale = 10;
     private Vector2 endofline;
+    private bool havePower = false;
     Vector2 lastClickedPos;
     
     // Start is called before the first frame update
@@ -34,6 +35,16 @@ public class playerMovement : MonoBehaviour
         linerenderer.enabled = false;
     }
 
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("power up"))
+        {
+            havePower = true;
+            isOnground = true;
+            linerenderer.enabled = true;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -45,6 +56,12 @@ public class playerMovement : MonoBehaviour
         LineUpdate();
         if (Input.GetMouseButtonDown(0) && isOnground)
             {
+                if (havePower == true)
+                {
+                    isOnground = false;
+                    linerenderer.enabled = false;
+                    havePower = false;
+                }
                 rb.AddForce(initialVilocity * speed, ForceMode2D.Impulse);
             }
     }
