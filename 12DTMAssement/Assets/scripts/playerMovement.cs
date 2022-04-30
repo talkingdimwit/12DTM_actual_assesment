@@ -26,6 +26,7 @@ public class playerMovement : MonoBehaviour
     // Detects when the player leaves and touches the ground
     public void OnCollisionEnter2D(Collision2D collision)
     {
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
         isOnground = true;
         linerenderer.enabled = true; // This is showing and hideing the players trejectory
     }
@@ -62,6 +63,8 @@ public class playerMovement : MonoBehaviour
                     linerenderer.enabled = false;
                     havePower = false;
                 }
+                rb.constraints = RigidbodyConstraints2D.None;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 rb.AddForce(initialVilocity * speed, ForceMode2D.Impulse);
             }
     }

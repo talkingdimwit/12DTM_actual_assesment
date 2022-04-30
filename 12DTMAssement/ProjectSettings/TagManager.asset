@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ground
   - line
+  - power up
   layers:
   - Default
   - TransparentFX
