@@ -59,6 +59,7 @@ public class playerMovement : MonoBehaviour
             {
                 if (havePower == true)
                 {
+                    rb.constraints = RigidbodyConstraints2D.FreezeAll;
                     isOnground = false;
                     linerenderer.enabled = false;
                     havePower = false;
