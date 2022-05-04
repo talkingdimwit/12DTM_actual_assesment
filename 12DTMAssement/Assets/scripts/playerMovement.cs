@@ -32,27 +32,27 @@ public class playerMovement : MonoBehaviour
     {
         if (collision.collider.gameObject.CompareTag("ground"))
         {
-            rb.constraints = RigidbodyConstraints2D.FreezePosition;
+            rb.constraints = RigidbodyConstraints2D.FreezePosition; // This is showing and hideing the players trejectory and sticking the player to the wall
             isOnground = true;
-            linerenderer.enabled = true; // This is showing and hideing the players trejectory
+            linerenderer.enabled = true; 
         }
         if(collision.collider.gameObject.CompareTag("noStick"))
         {
             isOnground = true;
-            linerenderer.enabled = true; // This is showing and hideing the players trejectory
+            linerenderer.enabled = true; // this makes the player not stick to bounce or nostick walls
         }
         if (collision.collider.gameObject.CompareTag("bounce"))
         {
             isOnground = true;
-            linerenderer.enabled = true; // This is showing and hideing the players trejectory
+            linerenderer.enabled = true;
         }
         if (collision.collider.gameObject.CompareTag("lava"))
         {
-            rb.position = new Vector2(spawnLocation.x, spawnLocation.y);
+            rb.position = new Vector2(spawnLocation.x, spawnLocation.y); // Sends player to checkpoint if they touch lava
         }
     }
     public void OnCollisionExit2D(Collision2D collision)
-    {
+    { // if the player is not touching the ground stops them from jumping twice
         if (collision.collider.gameObject.CompareTag("ground"))
         {
             isOnground = false;
@@ -71,7 +71,7 @@ public class playerMovement : MonoBehaviour
     }
 
     public void OnTriggerEnter2D(Collider2D other)
-    {
+    { // detects if player grabs power up or hits a checkpoint
         if (other.CompareTag("power up"))
         {
             havePower = true;
@@ -96,18 +96,24 @@ public class playerMovement : MonoBehaviour
         jumpCountText.text = "Jumps: " + jumpCount;
         if (Input.GetMouseButtonDown(0) && isOnground)
             {
-                if (havePower == true)
-                    {
-                    isOnground = false;
-                    linerenderer.enabled = false;
-                    havePower = false;
-                    }
-                rb.constraints = RigidbodyConstraints2D.FreezeAll;
-                rb.constraints = RigidbodyConstraints2D.None;
-                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-                rb.AddForce(initialVilocity * speed, ForceMode2D.Impulse);
-                jumpCount += 1;
+                Time.timeScale = 0f; // freeze time on click hold
             }
+        if (Input.GetMouseButtonUp(0) && isOnground)
+        {
+            Time.timeScale = 1f;
+            if (havePower == true)
+            {
+                isOnground = false;
+                linerenderer.enabled = false;
+                havePower = false;
+            }
+            // unsticks player to walls
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            rb.constraints = RigidbodyConstraints2D.None;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.AddForce(initialVilocity * speed, ForceMode2D.Impulse); //applies thurst to player
+            jumpCount += 1;
+        }
     }
 
     // This is a big math equation that draws the trejectory of the player

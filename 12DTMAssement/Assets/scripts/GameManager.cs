@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { // makes the timer in top left of screen count up in seconds
         time += Time.deltaTime;
         roundSeconds = (float)Math.Round(time, 0);
         timerText.text = "Time: " + roundSeconds;
