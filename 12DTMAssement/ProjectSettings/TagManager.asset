@@ -9,6 +9,7 @@ TagManager:
   - power up
   - noStick
   - bounce
+  - lava
   layers:
   - Default
   - TransparentFX

@@ -45,6 +45,10 @@ public class playerMovement : MonoBehaviour
             isOnground = true;
             linerenderer.enabled = true; // This is showing and hideing the players trejectory
         }
+        if (collision.collider.gameObject.CompareTag("lava"))
+        {
+            rb.position = new Vector3(1, 1, 1);
+        }
     }
     public void OnCollisionExit2D(Collision2D collision)
     {
