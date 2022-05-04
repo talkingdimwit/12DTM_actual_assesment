@@ -36,11 +36,6 @@ public class playerMovement : MonoBehaviour
             isOnground = true;
             linerenderer.enabled = true; 
         }
-        if(collision.collider.gameObject.CompareTag("noStick"))
-        {
-            isOnground = true;
-            linerenderer.enabled = true; // this makes the player not stick to bounce or nostick walls
-        }
         if (collision.collider.gameObject.CompareTag("bounce"))
         {
             isOnground = true;
@@ -96,7 +91,7 @@ public class playerMovement : MonoBehaviour
         jumpCountText.text = "Jumps: " + jumpCount;
         if (Input.GetMouseButtonDown(0) && isOnground)
             {
-                Time.timeScale = 0f; // freeze time on click hold
+                Time.timeScale = 0.5f; // freeze time on click hold
             }
         if (Input.GetMouseButtonUp(0) && isOnground)
         {
