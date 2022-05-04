@@ -10,6 +10,7 @@ TagManager:
   - noStick
   - bounce
   - lava
+  - checkPoint
   layers:
   - Default
   - TransparentFX

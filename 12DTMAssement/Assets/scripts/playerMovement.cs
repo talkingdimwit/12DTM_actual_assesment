@@ -16,6 +16,7 @@ public class playerMovement : MonoBehaviour
     private Vector2 endofline;
     private bool havePower = false;
     private float jumpCount = 0;
+    private Vector2 spawnLocation;
     Vector2 lastClickedPos;
     public TextMeshProUGUI jumpCountText;
 
@@ -47,7 +48,7 @@ public class playerMovement : MonoBehaviour
         }
         if (collision.collider.gameObject.CompareTag("lava"))
         {
-            rb.position = new Vector2(35, 1020);
+            rb.position = new Vector2(spawnLocation.x, spawnLocation.y);
         }
     }
     public void OnCollisionExit2D(Collision2D collision)
@@ -76,6 +77,10 @@ public class playerMovement : MonoBehaviour
             havePower = true;
             isOnground = true;
             linerenderer.enabled = true;
+        }
+        if (other.CompareTag("checkPoint"))
+        {
+            spawnLocation = new Vector2(rb.position.x, rb.position.y);
         }
     }
 
