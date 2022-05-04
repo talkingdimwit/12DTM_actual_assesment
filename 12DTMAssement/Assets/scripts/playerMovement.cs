@@ -58,12 +58,12 @@ public class playerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && isOnground)
             {
                 if (havePower == true)
-                {
+                    {
                     rb.constraints = RigidbodyConstraints2D.FreezeAll;
                     isOnground = false;
                     linerenderer.enabled = false;
                     havePower = false;
-                }
+                    }
                 rb.constraints = RigidbodyConstraints2D.None;
                 rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 rb.AddForce(initialVilocity * speed, ForceMode2D.Impulse);
