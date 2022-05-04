@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class playerMovement : MonoBehaviour
 {
@@ -14,8 +15,10 @@ public class playerMovement : MonoBehaviour
     private int lineScale = 10;
     private Vector2 endofline;
     private bool havePower = false;
+    private float jumpCount = 0;
     Vector2 lastClickedPos;
-    
+    public TextMeshProUGUI jumpCountText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,14 +29,40 @@ public class playerMovement : MonoBehaviour
     // Detects when the player leaves and touches the ground
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        rb.constraints = RigidbodyConstraints2D.FreezePosition;
-        isOnground = true;
-        linerenderer.enabled = true; // This is showing and hideing the players trejectory
+        if (collision.collider.gameObject.CompareTag("ground"))
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezePosition;
+            isOnground = true;
+            linerenderer.enabled = true; // This is showing and hideing the players trejectory
+        }
+        if(collision.collider.gameObject.CompareTag("noStick"))
+        {
+            isOnground = true;
+            linerenderer.enabled = true; // This is showing and hideing the players trejectory
+        }
+        if (collision.collider.gameObject.CompareTag("bounce"))
+        {
+            isOnground = true;
+            linerenderer.enabled = true; // This is showing and hideing the players trejectory
+        }
     }
     public void OnCollisionExit2D(Collision2D collision)
     {
-        isOnground = false;
-        linerenderer.enabled = false;
+        if (collision.collider.gameObject.CompareTag("ground"))
+        {
+            isOnground = false;
+            linerenderer.enabled = false;
+        }
+        if (collision.collider.gameObject.CompareTag("noStick"))
+        {
+            isOnground = false;
+            linerenderer.enabled = false;
+        }
+        if (collision.collider.gameObject.CompareTag("bounce"))
+        {
+            isOnground = false;
+            linerenderer.enabled = false;
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -55,18 +84,20 @@ public class playerMovement : MonoBehaviour
         lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         initialVilocity = (lastClickedPos + mouseCorrection) - rb.position;
         LineUpdate();
+        jumpCountText.text = "Jumps: " + jumpCount;
         if (Input.GetMouseButtonDown(0) && isOnground)
             {
                 if (havePower == true)
                     {
-                    rb.constraints = RigidbodyConstraints2D.FreezeAll;
                     isOnground = false;
                     linerenderer.enabled = false;
                     havePower = false;
                     }
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
                 rb.constraints = RigidbodyConstraints2D.None;
                 rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 rb.AddForce(initialVilocity * speed, ForceMode2D.Impulse);
+                jumpCount += 1;
             }
     }
 
