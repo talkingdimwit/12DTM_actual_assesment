@@ -47,7 +47,7 @@ public class playerMovement : MonoBehaviour
         }
         if (collision.collider.gameObject.CompareTag("lava"))
         {
-            rb.position = new Vector3(1, 1, 1);
+            rb.position = new Vector2(35, 1020);
         }
     }
     public void OnCollisionExit2D(Collision2D collision)
