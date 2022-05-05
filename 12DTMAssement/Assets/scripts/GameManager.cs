@@ -6,8 +6,8 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    public float time = 0;
-    public float roundSeconds;
+    private float time = 0;
+    private float roundSeconds;
     public TextMeshProUGUI timerText;
     
     // Start is called before the first frame update

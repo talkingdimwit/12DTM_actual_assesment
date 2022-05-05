@@ -39,6 +39,9 @@ public class playerMovement : MonoBehaviour
         if (collision.collider.gameObject.CompareTag("lava"))
         {
             rb.position = new Vector2(spawnLocation.x, spawnLocation.y); // Sends player to checkpoint if they touch lava
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            rb.constraints = RigidbodyConstraints2D.None;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
     public void OnCollisionExit2D(Collision2D collision)
@@ -78,8 +81,6 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        endofline = linerenderer.GetPosition(lineScale - 1);
-        Debug.Log(endofline);
         // Gets mouse position then makes the player be thrown towards it
         lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         initialVilocity = (lastClickedPos + mouseCorrection) - rb.position;
