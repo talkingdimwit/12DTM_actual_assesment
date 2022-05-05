@@ -36,11 +36,6 @@ public class playerMovement : MonoBehaviour
             isOnground = true;
             linerenderer.enabled = true; 
         }
-        if (collision.collider.gameObject.CompareTag("bounce"))
-        {
-            isOnground = true;
-            linerenderer.enabled = true;
-        }
         if (collision.collider.gameObject.CompareTag("lava"))
         {
             rb.position = new Vector2(spawnLocation.x, spawnLocation.y); // Sends player to checkpoint if they touch lava
@@ -76,6 +71,7 @@ public class playerMovement : MonoBehaviour
         if (other.CompareTag("checkPoint"))
         {
             spawnLocation = new Vector2(rb.position.x, rb.position.y);
+            Time.timeScale = 1f;
         }
     }
 
@@ -91,7 +87,7 @@ public class playerMovement : MonoBehaviour
         jumpCountText.text = "Jumps: " + jumpCount;
         if (Input.GetMouseButtonDown(0) && isOnground)
             {
-                Time.timeScale = 0.5f; // freeze time on click hold
+                Time.timeScale = 0.5f; // slows time on click hold
             }
         if (Input.GetMouseButtonUp(0) && isOnground)
         {
