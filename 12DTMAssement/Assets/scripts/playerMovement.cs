@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class playerMovement : MonoBehaviour
 {
@@ -13,12 +14,14 @@ public class playerMovement : MonoBehaviour
     private Vector2 initialVilocity;
     private Vector2 mouseCorrection;
     private int lineScale = 10;
-    private Vector2 endofline;
     private bool havePower = false;
     private float jumpCount = 0;
+    private float time = 0;
+    private float roundSeconds;
     private Vector2 spawnLocation;
     Vector2 lastClickedPos;
     public TextMeshProUGUI jumpCountText;
+    public TextMeshProUGUI timerText;
 
     // Start is called before the first frame update
     void Start()
@@ -85,7 +88,13 @@ public class playerMovement : MonoBehaviour
         lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         initialVilocity = (lastClickedPos + mouseCorrection) - rb.position;
         LineUpdate();
+
+        time += Time.deltaTime;
+        roundSeconds = (float)Math.Round(time, 0);
+        timerText.text = "Time: " + roundSeconds;
+
         jumpCountText.text = "Jumps: " + jumpCount;
+
         if (Input.GetMouseButtonDown(0) && isOnground)
             {
                 Time.timeScale = 0.5f; // slows time on click hold
