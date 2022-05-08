@@ -11,6 +11,8 @@ TagManager:
   - bounce
   - lava
   - checkPoint
+  - end
+  - collectable
   layers:
   - Default
   - TransparentFX
